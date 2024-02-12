@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Arima+Madurai');
+
+.footer1 {
+   position: fixed;
+   
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: center;
+}
+.hr{
+ 	width: 100%;
+ 	border: 1.5px solid black;
+ }
+ .button1{
+ 	box-shadow: 4px 4px gray;
+ }
+ * {
+    border-radius: 5px;
+}
+
+body.thumb {
+    transform: scale(0.4);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+main {
+    min-height: 80vh;
+}
+
+[class*='container'] {
+    border: 1px dashed #eee;
+    background-clip: content-box;
+}
+
+.row [class*='col'] {
+    background-color: #efefef;
+    background-clip: content-box;
+}
+
+.nav-item {
+    background-color: #eeeeff;
+    background-clip: content-box;
+}
