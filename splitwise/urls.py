@@ -16,7 +16,6 @@ urlpatterns = [
     path('transaction/',views.transaction,name='transaction'),
     path('transaction/forms/',views.transaction_form_multiple,name='transaction_form_multiple'),
     path('transaction/form/<str:f>/',views.transaction_form, name='transaction_form'),
-    path('transaction/form/',views.transaction_form_multiple, name='transaction_form_multiple'),
     path('groups/transaction/',views.group_transaction, name='group_transaction'),
     path('balances/',views.balances, name='balances'),
     path('friend/<str:f>/', views.friend, name='friend'),
