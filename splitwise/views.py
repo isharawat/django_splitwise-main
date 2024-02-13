@@ -32,29 +32,6 @@ class EditProfile(generic.CreateView):
 	template_name = 'editprofile.html'
 
   
-def remind(request, f):
-	me = User.objects.get(username=request.user.get_username())
-	other = User.objects.get(id=f)
-	template = loader.get_template('remind.html')
-	reminder_form = ReminderForm()
-	if request.method == 'POST':
-		print('f')
-		if 'remind' in request.POST:
-			#print(request.user.profile.bio)
-			reminder_form = ReminderForm(request.POST)
-			if reminder_form.is_valid():
-				print('f')
-				message1 = reminder_form.cleaned_data['message']
-				print(message1)
-				mess = Message(person1=me, person2=other, message=message1)
-				mess.save()
-				return HttpResponseRedirect("/splitwise/friend/"+f+"/")
-	context = {
-		'reminder_form' : reminder_form,
-		'f' : f
-	}
-	return HttpResponse(template.render(context, request))
-	#return(HttpResponse('success'))
 
 def groups(request): 
     me = User.objects.get(username=request.user.get_username())
@@ -189,25 +166,13 @@ def success(request):
 	else:
 		edit_profile_form=ProfileUpdateForm()
 
-	message_list = Message.objects.filter(person2=me)
-	no_of_messages_previously = me.profile.no_of_messages
-	no_of_messages = len(message_list)
-	new_messages = 0
-	#print(no_of_messages)
-	#print(no_of_messages_previously)
 	
-	if( no_of_messages > no_of_messages_previously ):
-		new_messages = no_of_messages - no_of_messages_previously
-		me.profile.no_of_messages = no_of_messages
-		me.profile.save()
 	
 	context = {
 		'friend_form' : friend_form,
 		'group_form' : group_form,
 		'friends_list' : friends_list,
 		'edit_profile_form' : edit_profile_form,
-		'no_of_messages' : no_of_messages,
-		'new_messages' : new_messages
 	}
 	
 

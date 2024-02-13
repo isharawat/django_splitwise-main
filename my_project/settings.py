@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'splitwise.apps.SplitwiseConfig',
     'bootstrap5',
+    "fontawesomefree",
 ]
 
 MIDDLEWARE = [
@@ -134,6 +135,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'splitwise/media')
 
 LOGIN_REDIRECT_URL = 'success'
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
 
 AUTH_PROFILE_MODULE = 'splitwise.UserProfile'

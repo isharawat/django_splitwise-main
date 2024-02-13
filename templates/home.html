@@ -1,44 +1,37 @@
 <!-- templates/home.html-->
 {% extends 'base.html' %} {% block content%} 
 
-
-{% comment %} First Name = {{ user.first_name }}
-<br /> Last Name = {{ user.last_name }}
-<br /> Email = {{ user.email }}
-<br /> {% endcomment %} {% comment %} Profile Photo {% if user.profile.image %}
-<img src="{{ user.profile.image.url }}" width="200" height="200" /> {% else %}
-<img src="default_face.png" width="200" height="200" /> {% endif %} {% endcomment %} {% comment %} {% if user.is_authenticated %} Hi {{ user.username }}! {% endif %}
-<p><a href="{% url 'notification' %}">notification</a></p>
-<p>You have {{ no_of_messages }} messages</p>
-{% if new_messages != 0 %}
-<p style="color: red">You have {{ new_messages }} new messages</p>
-{% endif %} {% endcomment %} {% comment %}
-<h2>Edit Profile</h2>
-<form action="/splitwise/success/" method="POST" enctype="multipart/form-data" , autocomplete="off">
-    {% csrf_token %} {{ edit_profile_form }} {% comment %}
-    <input type="submit" class="btn btn-primary" value="Submit" name="edit_profile" /> {% endcomment %} {% comment %}
-</form>
-{% endcomment %} {% comment %} {% if user.is_authenticated %} {% endcomment %}
-
-
-
-<main class="col overflow-auto ">
-    <div class="bg-light border rounded-3">
-      <br>
-            <div>
+    <div class="bg-light bg-white p-5 col overflow-auto rounded-3">
+            <div class = "">
                 <form action="/splitwise/success/" method="POST" autocomplete="off">
-                  <div class="flex-grow-1 d-flex align-items-center ">
-                    {% csrf_token %} {{ friend_form }}
-                    <input type="submit" value="Add Friend" class="btn btn-primary" name="friend" />
+                  <div class="flex-grow-1 d-flex align-items-center justify-content-between ">
+                    <div>{% csrf_token %} {{ friend_form }}</div>
+                    
+                    <input type="submit" value="Add Friend" class="btn btn-outline-primary" name="friend" />
                   </div>
                 </form>
             </div>
             <br>
             <div>
                 <form action="/splitwise/success/" method="POST" autocomplete="off">
-                  <div class="flex-grow-1 d-flex align-items-center">
-                    {% csrf_token %} {{ group_form }}
-                    <input type="submit" class="btn btn-primary" value="Add Group" class="btn btn-primary" name="group" />
+                  <div class="flex-grow-1 d-flex align-items-center justify-content-between">
+                  <div class="flex-grow-1 d-flex align-items-center">{% csrf_token %} 
+                   
+                      {% comment %} <p> Group Name: {{ group_form.group_name }} </p>
+                      <br> {% endcomment %}
+                      {{group_form}}</div>
+                    
+                      {% comment %} <p> Friends: 
+                        <label for="id_choices">Select Options:</label>
+                        <select id="id_choices" name="choices" class="form-control custom-select" multiple>
+                            {% for value, label in group_form.friends.choices %}
+                                
+                                <option value="{{ value }}" {% if value in group_form.friends.choices %}selected{% endif %}>{{label}}</option>
+                            {% endfor %}
+                        </select> {% endcomment %}
+                       
+               
+                    <input type="submit" class="btn btn-outline-primary" value="Add Group" class="btn btn-primary" name="group" />
                   </div>
                   </form>
             </div>
@@ -52,7 +45,7 @@
             </tr>
             {% for f,g in friends_list %}
             <tr>
-                <td><a href="/splitwise/friend/{{ f.person2.id }}/">{{ f.person2 }}</a></td>
+                <td><a class = "link_text" href="/splitwise/friend/{{ f.person2.id }}/">{{ f.person2 }}</a></td>
                 {% if g == 1 %}
                 <td>
                     <font color="green">{{ f.money_owed }}</font>
@@ -62,24 +55,24 @@
                     <font color="red">{{ f.money_owed }}</font>
                 </td>
                 {% endif %}
-                <td style="width: 40px; border: none">
+                {% comment %} <td style="width: 40px; border: none">
 
                   <form action="/splitwise/transaction/form/{{ f.person2.id }}/" method="POST">
-                    {% csrf_token %} {{ transaction_form}}
+                    {% csrf_token %}
                     <input type="submit" class="btn btn-primary" value="Add" name="transaction_form" />
                   </form>
 
                     {% comment %} <button type="submit" class="button1 btn btn-primary btn-block" name="plus" value="{{f}}" style="box-shadow: none">
         +
       </button> {% endcomment %}
-                </td>
+                {% comment %} </td>  {% endcomment %}
                 <td style="width: 70px; border: none">
 
                   <form action="/splitwise/friend/{{ f.person2.id }}/" method="POST">
                     {% csrf_token %}
                     <input
                       type="submit"
-                      class="btn btn-primary"
+                      class="btn btn-outline-secondary"
                       value="Settle Up"
                       name="settle_up"
                     />
@@ -92,10 +85,6 @@
 
 
     </div>
-</main>
-</div>
+ 
 
-
-
-
-{% comment %} {% endif %} {% endcomment %} {% endblock %}
+{% endblock %}

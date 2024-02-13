@@ -8,6 +8,7 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="bootstrap.bundle.min.js / bootstrap.bundle.js"></script>
@@ -22,8 +23,13 @@
     />
     {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
   </head>
-  <body> 
-    <a href = "splitwise/login/"> Login</a>
-  </body>
+  <body>
+    <!-- <a href = "splitwise/login/"> Login</a> -->
+    <div class="d-flex justify-content-center align-items-center">
+    <img src="{% static 'images/opening.png' %}" width="1300px" height="670px">
+    
+    <button class="login-button"><a href="splitwise/login/" class = "link_text"> Get Started</a></button>
+  
+</div>
+</body>
 </html>
-

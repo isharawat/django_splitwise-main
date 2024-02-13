@@ -48,7 +48,6 @@ class GroupForm(forms.Form):
         (RANGE_LONG, 'Long range')
     )
     friends = forms.MultipleChoiceField(choices=[])
-
     def __init__(self, user, *args, **kwargs):
         super(GroupForm, self).__init__(*args, **kwargs)
         self.fields['friends'] = forms.MultipleChoiceField(
@@ -61,7 +60,7 @@ class InvolvedForm(forms.Form):
 	def __init__(self, user, *args, **kwargs):
 		super(InvolvedForm, self).__init__(*args, **kwargs)
 		self.fields['friends'] = forms.MultipleChoiceField(
-			choices=user
+		choices=user
 		)
 
 class ChangeForm(forms.Form):
