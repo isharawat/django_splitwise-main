@@ -3,11 +3,14 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-	<h1>Detailed Activity</h1>
+<div class="bg-light bg-white p-5 col overflow-auto rounded-3">
+	<h3>Detailed Activity</h3>
+	<br>
 	{{ payer }} paid {{ total_amount }}
 	<br>
 	{% for f,g in lst %}
 		{{ f }} owes {{ g }}
 		<br>
 	{% endfor %}
+</div>
 {% endblock %}

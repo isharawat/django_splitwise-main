@@ -1,35 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container bg-white">
-        <div class="p-5">
-                {% for f, g, h, i, j in send_list %}
+<div class="container bg-white">
+    <div class="p-5"><table>
+        <tbody>
+            {% for f, g, h, i, j in send_list %}
+                <tr>
                     
-                        {% if h == "group does not exist xxxxxxwkebjkerjbkjengksdbkejbg" %}
-                            <a href="/splitwise/detailed_activity/{{ i.group_transaction_id }}/">
-                                <p>{{ i.added_by.username }} Added {{ g }}</p>
-                            </a>
-                        {% else %}
-                            <a href="/splitwise/detailed_activity/{{ i.group.id }}/{{ i.group_transaction_id }}/">
-                                <p>{{ i.added_by.username }} Added {{ g }} to {{ h }}</p>
-                            </a>
-                        {% endif %}
-                        {% if j == 1 %}
-                            {% if g != 'Settling!' %}
-                                <p style="color:green;">You get back {{ f }}</p>
-                            {% else %}
-                                <p style="color:green;">You paid {{ f }}</p>
-                            {% endif %}
-                        {% else %}
-                            {% if g != 'Settling!' %}
-                                <p style="color:red;">You owe {{ f }}</p>
-                            {% else %}
-                                <p style="color:red;">You were paid {{ f }}</p>
-                            {% endif %}
-                        {% endif %}
-                    
-                {% endfor %}</div>
-                <a href="{% url 'success' %}" class="btn btn-primary">Go Back</a>
-           
+                {% if h == "group does not exist xxxxxxwkebjkerjbkjengksdbkejbg" %}
+                    <td> <a href="/splitwise/detailed_activity/{{ i.group_transaction_id }}/">
+                        <p>{{ i.added_by.username }} Added {{ g }}</p>
+                    </a>
+                </td>
+                {% else %}
+                <td>
+                    <a href="/splitwise/detailed_activity/{{ i.group.id }}/{{ i.group_transaction_id }}/">
+                        <p>{{ i.added_by.username }} Added {{ g }} to {{ h }}</p>
+                    </a>
+                </td>
+                {% endif %}
+            
+                {% if j == 1 %}
+                    {% if g != 'Settling!' %}
+                        <td><p style="color:green;">You will get back {{ f }}</p></td>
+                    {% else %}
+                    <td><p style="color:green;">You paid {{ f }}</p></td>
+                    {% endif %}
+                {% else %}
+                    {% if g != 'Settling!' %}
+                    <td><p style="color:red;">You owe {{ f }}</p></<td>
+                    {% else %}
+                    <td><p style="color:red;">You were paid {{ f }}</p></td>
+                    {% endif %}
+                {% endif %}
+                </tr>
+                
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+    <a href="{% url 'success' %}" class="btn btn-primary">Go Back</a>    
+</div>
 {% endblock %}

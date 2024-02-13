@@ -1,6 +1,5 @@
 <!-- templates/home.html-->
 {% extends 'base.html' %} {% block content%} 
-
     <div class="bg-light bg-white p-5 col overflow-auto rounded-3">
             <div class = "">
                 <form action="/splitwise/success/" method="POST" autocomplete="off">
@@ -16,21 +15,7 @@
                 <form action="/splitwise/success/" method="POST" autocomplete="off">
                   <div class="flex-grow-1 d-flex align-items-center justify-content-between">
                   <div class="flex-grow-1 d-flex align-items-center">{% csrf_token %} 
-                   
-                      {% comment %} <p> Group Name: {{ group_form.group_name }} </p>
-                      <br> {% endcomment %}
                       {{group_form}}</div>
-                    
-                      {% comment %} <p> Friends: 
-                        <label for="id_choices">Select Options:</label>
-                        <select id="id_choices" name="choices" class="form-control custom-select" multiple>
-                            {% for value, label in group_form.friends.choices %}
-                                
-                                <option value="{{ value }}" {% if value in group_form.friends.choices %}selected{% endif %}>{{label}}</option>
-                            {% endfor %}
-                        </select> {% endcomment %}
-                       
-               
                     <input type="submit" class="btn btn-outline-primary" value="Add Group" class="btn btn-primary" name="group" />
                   </div>
                   </form>
@@ -55,17 +40,7 @@
                     <font color="red">{{ f.money_owed }}</font>
                 </td>
                 {% endif %}
-                {% comment %} <td style="width: 40px; border: none">
-
-                  <form action="/splitwise/transaction/form/{{ f.person2.id }}/" method="POST">
-                    {% csrf_token %}
-                    <input type="submit" class="btn btn-primary" value="Add" name="transaction_form" />
-                  </form>
-
-                    {% comment %} <button type="submit" class="button1 btn btn-primary btn-block" name="plus" value="{{f}}" style="box-shadow: none">
-        +
-      </button> {% endcomment %}
-                {% comment %} </td>  {% endcomment %}
+                
                 <td style="width: 70px; border: none">
 
                   <form action="/splitwise/friend/{{ f.person2.id }}/" method="POST">
@@ -82,9 +57,6 @@
 
             {% endfor %}
         </table>
-
-
     </div>
- 
 
 {% endblock %}

@@ -1,0 +1,4 @@
+django-bootstrap5=5.3.0
+django = 2.2.28
+python_version =3.6
+fontawesomefree

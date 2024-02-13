@@ -1,10 +1,11 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %} 
 {% block content %}
-<h1>Transaction</h1>
+<div class="bg-light bg-white p-5 col overflow-auto rounded-3">
+  <h1>Transaction</h1>
 
-<form action="/splitwise/transaction/" method="POST">
-  {% csrf_token %} {{ involved_form }}
-  <input type="submit" class="btn btn-primary" value="Next" name="involved" />
-</form>
-
+  <form action="/splitwise/transaction/" method="POST">
+    {% csrf_token %} {{ involved_form }}
+    <input type="submit" class="btn btn-primary" value="Next" name="involved" />
+  </form>
+</div>
 {% endblock %}

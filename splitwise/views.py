@@ -1,12 +1,6 @@
-from django.shortcuts import render, redirect, HttpResponse
-
-# Create your views here.
+from django.shortcuts import render, HttpResponse
 
 from django.shortcuts import render
-
-
-
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
@@ -20,7 +14,7 @@ from django.db.models import Q
 no_transactions = 0
 
 def my_login_page(request):
-    return render(request,"index.html",{})
+    return render(request, "index.html", {})
 class SignUp(generic.CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
@@ -35,7 +29,6 @@ class EditProfile(generic.CreateView):
 
 def groups(request): 
     me = User.objects.get(username=request.user.get_username())
-    
     groups = Membership.objects.filter(friend=me)
     groups_boolean=[]
     for g in groups:
@@ -50,19 +43,13 @@ def groups(request):
 		'groups_list' : groups_list,
 	}
     template = loader.get_template('groups.html') 
-	#return render(request, 'home.html',
-         #  context_instance=RequestContext(request))
     return HttpResponse(template.render(context, request))
 
 def success(request):
 	me = User.objects.get(username=request.user.get_username())
-	usr = request.user.get_username()
-
-
 	friend_form = FriendForm()
-	
 	xyz=Friend.objects.filter(person1=me)
-	#print(xyz)
+	# print(xyz)
 	final_choices=()
 	for e in xyz:
 		#print(str(e.person2))
@@ -144,42 +131,49 @@ def success(request):
 		else:
 			friends_boolean.append(1)
 	friends_list = zip(friends,friends_boolean)
-	
-	edit_profile_form = ProfileUpdateForm()
-	if request.method == 'POST':
-		if 'edit_profile' in request.POST:
-			print(request.user.profile.bio)
-			edit_profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-			if edit_profile_form.is_valid():
-				#edit_profile_form.save()
-				#bio = edit_profile_form.cleaned_data['bio']
-				#print(bio)
-				#image = edit_profile_form.cleaned_data['image']
-				#print(request.FILES['image'])
-				#z = Profile.objects.get(user = me)
-				#z.bio = bio
-				#z.image = "profile_image/"+str(request.FILES['image'])
-				#print(Profile.objects.get(user = me).image)
-				#z.save()
-				edit_profile_form.save()
-				#print(bio)
-	else:
-		edit_profile_form=ProfileUpdateForm()
 
-	
-	
 	context = {
 		'friend_form' : friend_form,
 		'group_form' : group_form,
 		'friends_list' : friends_list,
-		'edit_profile_form' : edit_profile_form,
 	}
 	
 
 	template = loader.get_template('home.html') 
-	#return render(request, 'home.html',
-         #  context_instance=RequestContext(request))
 	return HttpResponse(template.render(context, request))
+
+
+def balances(request):
+    me = request.user
+    template = loader.get_template('balances.html')
+    g=request.session.get('group')
+    group = Group.objects.get(id=g)
+    print(group)
+    lst = Membership.objects.filter(group=group)
+    money = []
+    frnds_list = []
+    for l in lst:
+        if l.friend != me:
+            money.append([l.friend.username, l.money_owed, l.friend.id])
+            frnds_list.append(l.friend)
+    print(money)
+    money_friends = []
+    for f in frnds_list:
+        tlist = Transaction.objects.filter(group=group,lender=me,borrower=f)
+        amt = 0
+        for t in tlist:
+            amt=amt+t.amount
+        tlist = Transaction.objects.filter(group=g[0],lender=f,borrower=me)
+        for t in tlist:
+            amt=amt-t.amount
+        money_friends.append([f.username, amt, f.id])
+    print(money_friends)
+    x=''
+    context = {
+        'money': money,
+        'money_friends':money_friends
+    }
+    return(HttpResponse(template.render(context,request)))
 
 def friend(request,f):
 	me = request.user
@@ -426,7 +420,8 @@ def group(request,g):
 	context = {
 		'trans_list':trans_list,
 		'g':g,
-		'change_form':change_form
+		'change_form':change_form,
+		'group': group,
 	}
 	
 	return HttpResponse(template.render(context, request))
@@ -678,7 +673,7 @@ def transaction_form(request, f):
 	final_choices = final_choices + ((str(p),str(p)),)
 	
 	choices = request.session.get('choices')
-	template = loader.get_template('transaction_form.html')
+	template = loader.get_template('transaction_form_2.html')
 	transaction_form = TransactionForm(final_choices)
 	#print(transaction_form.field_names)
 	if request.method == 'POST':
@@ -849,3 +844,12 @@ def group_transaction(request):
 		'group_transaction_form':group_transaction_form
 	}
 	return HttpResponse(template.render(context,request))
+
+
+from .models import Profile
+def profile(request):
+    user_profile = Profile.objects.get(user=request.user)
+    context = {
+        'user_profile': user_profile
+    }
+    return render(request, 'profile.html', context)

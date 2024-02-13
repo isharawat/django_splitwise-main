@@ -1,31 +1,32 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %} 
 {% block content %}
-<h1>Balances</h1>
-<table>
-  <tr>
-    <th>Friend</th>
-    <th>Balance with me</th>
-  </tr>
-  {% for f,m ,id in money_friends %}
-  <tr>
-    <td><a href="/splitwise/friend/{{ id }}">{{ f }}</a></td>
+<div class="bg-light bg-white p-5 col overflow-auto rounded-3">
+  <h1>Balances</h1>
+  <table>
+    <tr>
+      <th>Friend</th>
+      <th>Balance with me</th>
+    </tr>
+    {% for f,m ,id in money_friends %}
+    <tr>
+      <td><a href="/splitwise/friend/{{ id }}">{{ f }}</a></td>
 
-    <td>{{ m }}</td>
-  </tr>
-  {% endfor %}
-</table>
-<br />
-<table>
-  <tr>
-    <th>Person</th>
-    <th>Balance with group</th>
-  </tr>
-  {% for f,m,id in money %}
-  <tr>
-    <td><a href="/splitwise/friend/{{ id }}">{{ f }}</a></td>
-    <td>{{ m }}</td>
-  </tr>
-  {% endfor %}
-</table>
-
+      <td>{{ m }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br />
+  <table>
+    <tr>
+      <th>Person</th>
+      <th>Balance with group</th>
+    </tr>
+    {% for f,m,id in money %}
+    <tr>
+      <td><a href="/splitwise/friend/{{ id }}">{{ f }}</a></td>
+      <td>{{ m }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
 {% endblock %}

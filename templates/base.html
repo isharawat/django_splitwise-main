@@ -33,7 +33,7 @@
   </head>
   <body> 
     {% if user.is_authenticated %}
-<header class="py-3 mb-4 border-bottom shadow">
+<header class="py-3 border-bottom shadow">
   <div class=" align-items-center d-flex">
    
     <div class="flex-shrink-1">
@@ -45,7 +45,7 @@
       </a>
     </div>
     <div class="flex-grow-1 d-flex align-items-center justify-content-evenly">
-      <h1>SPLIT.IT</h1>
+      <h1>SPLITWISE</h1>
       <div></div>
       <div></div>
       <div></div>
@@ -76,7 +76,7 @@
           style=""
         >
           <li><a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><a class="dropdown-item" href="/splitwise/profile/">Profile</a></li>
 
           <li><a class="dropdown-item" href="{% url 'logout' %}" >Sign out</a></li>
         </ul>
@@ -111,45 +111,7 @@
       {% block content_register %} {% endblock %}
     </div>
    {% endif %}
-
 </div>
-  
-        
-
-    
   </body>
 </html>
 
-
-
-{% comment %}
-    <main style="display: grid; grid-template-columns: 1fr 4fr">
-      <nav class="navbar navbar-inverse" style="top: 0; position: sticky">
-        <div class="container-fluid">
-          <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-              {% if user.is_authenticated %}
-              <li><a href="{% url 'logout' %}">logout</a></li>
-              <li><a href="{% url 'password_change' %}">change password</a></li>
-              <li><a href="/splitwise/transaction/">Add Expense</a></li>
-              <li><a href="/splitwise/activity_tab/">Activity Tab</a></li>
-              {% else %}
-              <p>You are not logged in</p>
-              <li><a href="{% url 'login' %}">login</a></li>
-              <li><a href="{% url 'signup' %}">signup</a></li>
-              {% endif %}
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-      {% comment %}
-      <div class="footer1">
-        <br />
-        © 2018 Copyright:
-        <br />
-        <p>SPLIT.IT</p>
-      </div>
-      {% endcomment %} {% comment %}
-    </main>
-    {% endcomment %}

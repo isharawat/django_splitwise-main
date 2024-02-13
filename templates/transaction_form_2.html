@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %} 
 {% block content %}
+<div class="bg-light bg-white p-5 col overflow-auto rounded-3">
 <h1>Transaction</h1>
 
 <form action="/splitwise/transaction/form/" method="POST" autocomplete="off">
@@ -11,5 +12,5 @@
     name="transaction"
   />
 </form>
-
+</div>
 {% endblock %}

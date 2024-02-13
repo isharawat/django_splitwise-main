@@ -3,38 +3,62 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-	<h1>Group</h1>
+<div class="bg-light bg-white p-5 col overflow-auto rounded-3">
+    <div class = "d-flex justify-content-between align-items-center" >
+        <h3>{{group}}</h3>
+        <div class ="d-flex justify-content-between w-50 align-items-center">
+            <form action="/splitwise/balances/" method="POST">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-outline-success " value="Balances" name= "balances">
+            </form>
+            <button class = "btn btn-outline-success"><a href = "/splitwise/groups/transaction/" style="text-decoration: none; color: black;" >Add Group Expense</a></button>
+            <button class = "btn btn-outline-primary"><a href='/splitwise/success/' style="text-decoration: none; color: black;">Go back</a></button>
+        </div>
+    </div>
+    <hr>
 	<form action="/splitwise/group/{{ g }}/" method="POST">
         {% csrf_token %}
         {{ change_form }}
-        <input type="submit" class="btn btn-primary" value="Settle Up" name= "settle_up">
+        <input type="submit" class="btn btn-secondary" value="Settle Up" name= "settle_up">
     </form>
-    <form action="/splitwise/balances/" method="POST">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-primary" value="Balances" name= "balances">
-    </form>
-	<a href = "/splitwise/groups/transaction/"><h3>Add Expense</h3></a>
+    
 	<br>
 	<h2>Transactions</h2>
-	{% for a,b,c,d,e,z in trans_list %}
-	<table>	
-			<tr>Date:{{ a.0 }}</tr><br>
-			<tr>Description: {{ d.0 }}</tr><br>
-			<tr>Tag: {{ c.0 }}</tr><br>
-			{% if c.0 != 'Settle' %}
-			<tr>{{ b.0 }} paid {{ z }}</tr><br>
-			
-			{% for f in e %}
-			<tr>{{ f.0 }} owes {{ f.1 }}</tr><br>
-			{% endfor %}
-			{% else %}
-			{% for f in e %}
-			<tr>{{ b.0 }} paid {{ z }} to {{ f.0 }}</tr><br>
-			{% endfor %}
-			{% endif %}
-	</table>
-	<br><br>
-	{% endfor %}
-	<a href='/splitwise/success/'>Go back</a>
-	
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Tag</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a, b, c, d, e, z in trans_list %}
+                <tr>
+                    <td>{{ a.0 }}</td>
+                    <td>{{ d.0 }}</td>
+                    <td>{{ c.0 }}</td>
+                    <td>
+                        {% if c.0 != 'Settle' %}
+                        <p>{{ b.0 }} paid {{ z }}</p>
+                        {% for f in e %}
+                        <p>{{ f.0 }} owes {{ f.1 }}</p>
+                        {% endfor %}
+                        {% else %}
+                        {% for f in e %}
+                        <p>{{ b.0 }} paid {{ z }} to {{ f.0 }}</p>
+                        {% endfor %}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
+
+
